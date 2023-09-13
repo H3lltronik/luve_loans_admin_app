@@ -33,15 +33,6 @@ function getItem(
 }
 
 const items: MenuItem[] = [
-  getItem("Almacén", "2", null, [
-    getItem("Inventario", "/admin/inventory", <CodeSandboxOutlined />),
-    // getItem(
-    //   "Unidades de medida",
-    //   "/admin/measurement-types",
-    //   <ScissorOutlined />
-    // ),
-    getItem("Productos", "/admin/products", <BarcodeOutlined />),
-  ]),
   getItem("Administración", "1", null, [
     getItem("Usuarios", "/admin/users", <PieChartOutlined />, []),
     getItem("Perfiles", "/admin/profiles", <ProfileOutlined />),

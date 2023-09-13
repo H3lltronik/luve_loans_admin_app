@@ -1,8 +1,8 @@
 import { PoweroffOutlined, UserOutlined } from "@ant-design/icons";
+import { useQuery } from "@tanstack/react-query";
 import { Avatar, Button, Layout, Popover, Spin, Typography, theme } from "antd";
 import { useMemo } from "react";
 import { AuthAPI } from "../api";
-import { useAdminAPI } from "../hooks";
 import { showToast } from "../lib/notify";
 
 const { Text, Title } = Typography;
@@ -29,7 +29,10 @@ export const DefaultHeader: React.FC<HeaderProps> = (props) => {
   } = theme.useToken();
   const { navContent, title } = props;
 
-  const { data: meData, isLoading: meLoading } = useAdminAPI("me");
+  const { data: meData, isLoading: meLoading } = useQuery<MeResponse>(
+    ["me"],
+    () => AuthAPI.me()
+  );
 
   const initials = useMemo(() => {
     if (meLoading) return <Spin />;

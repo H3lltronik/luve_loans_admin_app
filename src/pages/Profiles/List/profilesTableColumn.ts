@@ -4,10 +4,10 @@ import { alphabetically } from "../../../lib/sorters";
 export const profileListColumns: ColumnsType<Profile> = [
   {
     title: "ID",
-    dataIndex: "partidaId",
-    key: "partidaId",
+    dataIndex: "seqId",
+    key: "seqId",
     width: 150,
-    sorter: (a, b) => a.partidaId - b.partidaId,
+    sorter: (a, b) => a.seqId - b.seqId,
     showSorterTooltip: false,
   },
   {

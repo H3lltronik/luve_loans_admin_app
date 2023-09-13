@@ -1,5 +1,5 @@
 import { ExclamationCircleOutlined } from "@ant-design/icons";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { Layout, Modal } from "antd";
 import React, { useMemo, useRef } from "react";
 import { useNavigate, useParams } from "react-router-dom";
@@ -8,7 +8,6 @@ import { AppLoader } from "../../../components/Common/AppLoader";
 import UserForm, {
   UserFormHandle,
 } from "../../../components/Forms/User/UserForm";
-import useAdminMutation from "../../../hooks/useAdminAPI/useAdminMutation";
 import { showToast } from "../../../lib/notify";
 import { UsersManageBreadcrumb } from "../Common/Breadcrums";
 
@@ -18,7 +17,11 @@ const { Content } = Layout;
 export const UsersManage: React.FC = () => {
   const userFormRef = useRef<UserFormHandle | null>(null);
   const [pageLoading, setPageLoading] = React.useState<boolean>(false);
-  const { mutateAsync } = useAdminMutation("createUser");
+  const { mutateAsync } = useMutation(
+    (data: CreateUserRequest) => UserAPI.createUser(data),
+  );
+
+
   const navigate = useNavigate();
   const { id } = useParams();
 

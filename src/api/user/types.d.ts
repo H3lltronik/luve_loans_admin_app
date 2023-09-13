@@ -5,14 +5,12 @@ interface User {
   isDraft: boolean;
   isPublished: boolean;
   id: string;
-  partidaId: number;
+  seqId: number;
   username: string;
   name: string;
   password: string;
-  departmentId: string;
   profileId: string;
   profile: Profile;
-  department: Department;
 }
 
 type MeResponse = User;
@@ -31,7 +29,6 @@ interface UserCreatedResponse {
   password: string;
   profile: Profile;
   profileId: string;
-  departmentId: string;
   deletedAt?: null;
   createdAt: string;
   updatedAt: string;
@@ -45,7 +42,6 @@ interface CreateUserRequest {
   name: string;
   password: string;
   profileId: string;
-  departmentId: string;
 }
 
 // parsed

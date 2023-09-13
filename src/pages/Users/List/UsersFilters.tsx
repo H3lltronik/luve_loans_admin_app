@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { Input, Select } from "antd";
 import debounce from "lodash.debounce";
 import { useMemo } from "react";
-import { DepartmentsAPI, ProfileAPI } from "../../../api";
+import {  ProfileAPI } from "../../../api";
 import { entityStatuses } from "../../../lib/entity.utils";
 import { useUsersListPageStore } from "./users_list_page.store";
 
@@ -11,7 +11,6 @@ export default function UsersFilters() {
     setNameSearch,
     setUsernameSearch,
     setProfileSearch,
-    setDepartmentSearch,
     setDraftMode,
     setPublished,
   } = useUsersListPageStore((state) => state);
@@ -20,23 +19,12 @@ export default function UsersFilters() {
     GetProfilesResponse | APIError
   >(["profiles"], () => ProfileAPI.getProfiles());
 
-  const { data: departmentsData, isLoading: loadingDepartments } = useQuery<
-    GetDepartmentsResponse | APIError
-  >(["departments"], () => DepartmentsAPI.getDepartments());
-
   const profiles = useMemo(() => {
     if (loadingProfiles || !profilesData) return [];
     if ("data" in profilesData) return profilesData.data;
 
     return [];
   }, [profilesData, loadingProfiles]);
-
-  const departments = useMemo(() => {
-    if (loadingDepartments || !departmentsData) return [];
-    if ("data" in departmentsData) return departmentsData.data;
-
-    return [];
-  }, [departmentsData, loadingDepartments]);
 
   const debouncedSetNameSearch = useMemo(
     () => debounce(setNameSearch, 300),
@@ -55,8 +43,6 @@ export default function UsersFilters() {
     debouncedSetUsernameSearch(e.target.value);
 
   const handleProfileChange = (value: string) => setProfileSearch(value);
-
-  const handleDepartmentChange = (value: string) => setDepartmentSearch(value);
 
   const handleStatusChange = (value: string[]) => {
     if (value.includes(entityStatuses.DRAFT)) setDraftMode(true);
@@ -105,22 +91,6 @@ export default function UsersFilters() {
             {profiles.map((profile) => (
               <Select.Option key={profile.id} value={profile.id}>
                 {profile.name}
-              </Select.Option>
-            ))}
-          </Select>
-        </div>
-
-        <div className="flex flex-col">
-          <small>Busqueda por departamento</small>
-          <Select
-            loading={loadingDepartments}
-            className="w-40"
-            placeholder="Selecciona..."
-            onChange={handleDepartmentChange}
-            allowClear>
-            {departments.map((department) => (
-              <Select.Option key={department.id} value={department.id}>
-                {department.name}
               </Select.Option>
             ))}
           </Select>

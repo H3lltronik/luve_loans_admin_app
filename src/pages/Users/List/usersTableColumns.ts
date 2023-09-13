@@ -1,10 +1,10 @@
 import type { ColumnsType } from "antd/es/table";
 
-export const usersListColumns: ColumnsType<Product> = [
+export const usersListColumns: ColumnsType<User> = [
   {
     title: "ID",
-    dataIndex: "partidaId",
-    key: "partidaId",
+    dataIndex: "seqId",
+    key: "seqId",
     width: 150,
   },
   {
@@ -22,12 +22,6 @@ export const usersListColumns: ColumnsType<Product> = [
     dataIndex: "profile",
     key: "profileName",
     render: (profile: Profile) => profile && profile.name,
-  },
-  {
-    title: "Departamento",
-    dataIndex: "department",
-    key: "departmentName",
-    render: (department: Department) => department && department.name,
   },
   {
     title: "Estatus",

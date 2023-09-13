@@ -7,8 +7,7 @@ import {
   useMemo,
   useState,
 } from "react";
-import { DepartmentsAPI } from "../../../api";
-import useAdminQuery from "../../../hooks/useAdminAPI/useAdminQuery";
+import { ProfileAPI } from "../../../api";
 
 const onFinish = (values: unknown) => {
   console.log("Success:", values);
@@ -40,12 +39,9 @@ const UserForm = forwardRef<UserFormHandle, UserFormProps>((props, ref) => {
   const [form] = Form.useForm();
   const [isDraft, setIsDraft] = useState<boolean>(false);
 
-  const { data: profilesData, isLoading: loadingProfiles } =
-    useAdminQuery("profiles");
-
-  const { data: departmentsData, isLoading: loadingDepartments } = useQuery<
-    GetDepartmentsResponse | APIError
-  >(["departments"], () => DepartmentsAPI.getDepartments());
+  const { data: profilesData, isLoading: loadingProfiles } = useQuery<
+    GetProfilesResponse | APIError
+  >(["profiles"], () => ProfileAPI.getProfiles());
 
   useImperativeHandle(
     ref,
@@ -67,13 +63,6 @@ const UserForm = forwardRef<UserFormHandle, UserFormProps>((props, ref) => {
   useEffect(() => {
     if (props.entity) form.setFieldsValue(props.entity);
   }, [form, props.entity]);
-
-  const departments = useMemo(() => {
-    if (loadingDepartments || !departmentsData) return [];
-    if ("data" in departmentsData) return departmentsData.data;
-
-    return [];
-  }, [departmentsData, loadingDepartments]);
 
   return (
     <Form
@@ -158,24 +147,6 @@ const UserForm = forwardRef<UserFormHandle, UserFormProps>((props, ref) => {
           {profilesData?.data.map((profile) => (
             <option key={profile.id} value={profile.id}>
               {profile.name}
-            </option>
-          ))}
-        </Select>
-      </Form.Item>
-
-      <Form.Item<FieldType>
-        label="Department"
-        name="departmentId"
-        rules={[
-          { required: true && !isDraft, message: "Este campo es requerido" },
-        ]}>
-        <Select
-          placeholder="Select a department"
-          allowClear
-          loading={loadingDepartments}>
-          {departments.map((department) => (
-            <option key={department.id} value={department.id}>
-              {department.name}
             </option>
           ))}
         </Select>

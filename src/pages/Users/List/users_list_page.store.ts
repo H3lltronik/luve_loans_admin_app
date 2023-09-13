@@ -10,9 +10,6 @@ type UsersListPageState = {
   profileSearch: string;
   setProfileSearch: (value: string) => void;
 
-  departmentSearch: string;
-  setDepartmentSearch: (value: string) => void;
-
   loading: boolean;
   setLoading: (value: boolean) => void;
 
@@ -34,9 +31,6 @@ export const useUsersListPageStore = create<UsersListPageState>((set, get) => ({
 
   profileSearch: "",
   setProfileSearch: (value: string) => set({ profileSearch: value }),
-
-  departmentSearch: "",
-  setDepartmentSearch: (value: string) => set({ departmentSearch: value }),
 
   draftMode: undefined,
   setDraftMode: (value: boolean | undefined) => set({ draftMode: value }),

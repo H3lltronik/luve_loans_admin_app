@@ -5,7 +5,7 @@ interface Profile {
   isDraft: boolean;
   isPublished: boolean;
   id: string;
-  partidaId: number;
+  seqId: number;
   name: string;
   roles: string[];
 }

@@ -84,9 +84,9 @@ const _AdminDataTable = <
 
   const { mutateAsync } = useMutation((id: string) => deleteAction(id), {
     onSuccess: (result) => {
-      if ("partidaId" in result)
+      if ("seqId" in result)
         showToast(
-          `Registro ${result.partidaId} eliminado correctamente`,
+          `Registro ${result.seqId} eliminado correctamente`,
           "success"
         );
       else showToast("Ha ocurrido un error al eliminar el registro", "error");

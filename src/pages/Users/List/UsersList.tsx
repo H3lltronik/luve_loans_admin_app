@@ -17,7 +17,6 @@ export const UsersList: React.FC = () => {
     nameSearch,
     usernameSearch,
     profileSearch,
-    departmentSearch,
     getDraftMode,
     getPublished,
   } = useUsersListPageStore();
@@ -63,7 +62,6 @@ export const UsersList: React.FC = () => {
                 nameSearch,
                 usernameSearch,
                 profileId: profileSearch,
-                departmentId: departmentSearch,
                 draftMode: getDraftMode(),
                 published: getPublished(),
               }}
