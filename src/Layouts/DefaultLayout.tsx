@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import logo from "../assets/nutras-logo.png";
+import logo from "../assets/logo_luve.svg";
 import { routesList } from "../router/routes";
 import { DefaultHeader } from "./DefaultHeader";
 import { DefaultLayoutContent } from "./DefaultLayoutContent";
@@ -28,18 +28,20 @@ export const DefaultLayout: React.FC<HeaderProps> = (props) => {
         className="shadow-lg"
         collapsed={collapsed}
         onCollapse={(value) => setCollapsed(value)}>
-        <Link to={routesList.admin.path}>
-          <div
-            className="demo-logo-vertical"
-            style={{ backgroundImage: `url(${logo})` }}
-          />
-        </Link>
+        <div className="py-1 bg-white">
+          <Link to={routesList.admin.path}>
+            <div
+              className="demo-logo-vertical"
+              style={{ backgroundImage: `url(${logo})` }}
+            />
+          </Link>
+        </div>
         <AdminMenu />
       </Sider>
       <Layout>
         <DefaultHeader
           navContent={navContent}
-          title={headerTitle ?? "NUTRAS"}
+          title={headerTitle ?? "Luve CI"}
         />
         {/* <Outlet /> */}
         <ToastContainer />

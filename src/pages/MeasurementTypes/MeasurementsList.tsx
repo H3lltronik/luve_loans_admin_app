@@ -67,7 +67,7 @@ export const MeasurementsList: React.FC = () => {
 
           <Button
             onClick={() => navigate("/admin/measurement-types/manage")}
-            className="bg-green-600 text-white hover:bg-green-50"
+            className="bg-red-600 text-white hover:bg-green-50"
             type="default">
             Nueva unidad de medida
           </Button>

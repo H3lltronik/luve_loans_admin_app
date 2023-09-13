@@ -1,7 +1,7 @@
 import { Breadcrumb, Image, Layout, Typography } from "antd";
 import { ItemType } from "antd/es/breadcrumb/Breadcrumb";
 import React from "react";
-import nutrasLogo from "../../assets/dashboard.svg";
+import image from "../../assets/dashboard.svg";
 
 const { Content } = Layout;
 
@@ -30,7 +30,7 @@ export const Home: React.FC = () => {
             <Typography.Title level={1}>Bienvenido al sistema</Typography.Title>
             <Image
               preview={false}
-              src={nutrasLogo}
+              src={image}
               className="-mt-10"
               style={{ maxHeight: "80vh" }}
             />

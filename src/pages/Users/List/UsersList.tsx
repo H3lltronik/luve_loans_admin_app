@@ -43,7 +43,7 @@ export const UsersList: React.FC = () => {
 
           <Button
             onClick={() => navigate("/admin/users/manage")}
-            className="bg-green-600 text-white hover:bg-green-50"
+            className="bg-red-600 text-white hover:bg-green-50"
             type="default">
             Nuevo usuario
           </Button>

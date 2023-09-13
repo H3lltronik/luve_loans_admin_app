@@ -1,3 +1,21 @@
+:root {
+  --primary-color-200: #e31937;
+  --primary-color-dimmer: #e73c4f;
+
+  --neutral-color-50: #f5f6f9;
+  --neutral-color-200: #6d6e71;
+  --neutral-color-300: #262626;
+
+  --secondary-color-200: #009622;
+
+  --services-line-height: 0px;
+  --services-line-max-height: 0px;
+}
+
 .bg-gradient {
-  background: linear-gradient(to bottom, #e31937, #f5f6f9);
+  background: linear-gradient(
+    to bottom,
+    var(--primary-color-200),
+    var(--primary-color-dimmer)
+  );
 }
