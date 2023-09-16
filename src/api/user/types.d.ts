@@ -7,7 +7,6 @@ interface User {
   id: string;
   seqId: number;
   username: string;
-  name: string;
   password: string;
   profileId: string;
   profile: Profile;

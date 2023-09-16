@@ -52,7 +52,7 @@ function Login() {
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gray-400 bg-gradient">
-      <div className="z-10 px-8 py-3 bg-white shadow-md rounded-2xl">
+      <div className="z-10 px-8 py-3 bg-white shadow-md rounded-2xl max-w-md">
         <Form name="login" className="login-form" onFinish={onFinish}>
           <div className="flex justify-center self-stretch">
             <img

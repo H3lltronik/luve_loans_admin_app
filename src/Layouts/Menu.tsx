@@ -1,9 +1,4 @@
-import {
-  BarcodeOutlined,
-  CodeSandboxOutlined,
-  PieChartOutlined,
-  ProfileOutlined,
-} from "@ant-design/icons";
+import { PieChartOutlined, ProfileOutlined } from "@ant-design/icons";
 import type { MenuProps } from "antd";
 import { Menu } from "antd";
 import React from "react";
@@ -33,8 +28,12 @@ function getItem(
 }
 
 const items: MenuItem[] = [
-  getItem("Administración", "1", null, [
-    getItem("Usuarios", "/admin/users", <PieChartOutlined />, []),
+  getItem("Tramites", "1", null, [
+    getItem("Clientes", "/admin/clients", <PieChartOutlined />, []),
+    getItem("Asignacion de tramite", "/admin/profiles", <ProfileOutlined />),
+  ]),
+  getItem("Seguridad", "2", null, [
+    getItem("Accesos", "/admin/users", <PieChartOutlined />, []),
     getItem("Perfiles", "/admin/profiles", <ProfileOutlined />),
   ]),
   // Uncomment and modify as needed

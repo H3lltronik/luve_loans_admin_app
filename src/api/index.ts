@@ -1,4 +1,5 @@
 import BaseAuthAPI from "./auth/auth.api";
+import BaseClientAPI from "./client/client.api";
 import { ENTITIES_ENDPOINTS } from "./constants";
 import * as END_POINTS from "./endpoints";
 import BaseProfilesAPI from "./profiles/profiles.api";
@@ -11,6 +12,9 @@ export const UserAPI = new BaseUserAPI(
 );
 export const ProfileAPI = new BaseProfilesAPI(
   `${BASE_URL}/${ENTITIES_ENDPOINTS.profiles}`
+);
+export const ClientAPI = new BaseClientAPI(
+  `${BASE_URL}/${ENTITIES_ENDPOINTS.clients}`
 );
 
 export const AuthAPI = new BaseAuthAPI({

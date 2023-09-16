@@ -13,11 +13,6 @@ export const usersListColumns: ColumnsType<User> = [
     key: "username",
   },
   {
-    title: "Nombre",
-    dataIndex: "name",
-    key: "name",
-  },
-  {
     title: "Perfil",
     dataIndex: "profile",
     key: "profileName",

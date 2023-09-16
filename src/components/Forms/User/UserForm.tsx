@@ -1,13 +1,7 @@
-import { useQuery } from "@tanstack/react-query";
-import { Form, Input, Select } from "antd";
-import {
-  forwardRef,
-  useEffect,
-  useImperativeHandle,
-  useMemo,
-  useState,
-} from "react";
+import { Form, Input } from "antd";
+import { forwardRef, useEffect, useImperativeHandle, useState } from "react";
 import { ProfileAPI } from "../../../api";
+import { GenericSelect } from "../Common/GenericSelect";
 
 const onFinish = (values: unknown) => {
   console.log("Success:", values);
@@ -39,10 +33,6 @@ const UserForm = forwardRef<UserFormHandle, UserFormProps>((props, ref) => {
   const [form] = Form.useForm();
   const [isDraft, setIsDraft] = useState<boolean>(false);
 
-  const { data: profilesData, isLoading: loadingProfiles } = useQuery<
-    GetProfilesResponse | APIError
-  >(["profiles"], () => ProfileAPI.getProfiles());
-
   useImperativeHandle(
     ref,
     (): UserFormHandle => ({
@@ -72,15 +62,6 @@ const UserForm = forwardRef<UserFormHandle, UserFormProps>((props, ref) => {
       onFinishFailed={onFinishFailed}
       autoComplete="off">
       <Form.Item<FieldType> label="Id" name="id" hidden={true}>
-        <Input />
-      </Form.Item>
-
-      <Form.Item<FieldType>
-        label="Nombre"
-        name="name"
-        rules={[
-          { required: true && !isDraft, message: "Este campo es requerido" },
-        ]}>
         <Input />
       </Form.Item>
 
@@ -134,23 +115,18 @@ const UserForm = forwardRef<UserFormHandle, UserFormProps>((props, ref) => {
         </Form.Item>
       )}
 
-      <Form.Item<FieldType>
-        label="Profile"
+      <GenericSelect
+        fetcher={() => ProfileAPI.getProfiles()}
+        label="Perfil"
+        placeholder="Selecciona un perfil"
+        optionLabel="name"
         name="profileId"
+        optionKey={"id"}
         rules={[
           { required: true && !isDraft, message: "Este campo es requerido" },
-        ]}>
-        <Select
-          placeholder="Select a profile"
-          allowClear
-          loading={loadingProfiles}>
-          {profilesData?.data.map((profile) => (
-            <option key={profile.id} value={profile.id}>
-              {profile.name}
-            </option>
-          ))}
-        </Select>
-      </Form.Item>
+        ]}
+        queryKey={["profiles"]}
+      />
     </Form>
   );
 });
