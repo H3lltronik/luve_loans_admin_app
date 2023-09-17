@@ -3,6 +3,7 @@ import type { MenuProps } from "antd";
 import { Menu } from "antd";
 import React from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import { routesList } from "../router/routes";
 
 type MenuItem = {
   key: React.Key;
@@ -29,12 +30,16 @@ function getItem(
 
 const items: MenuItem[] = [
   getItem("Tramites", "1", null, [
-    getItem("Clientes", "/admin/clients", <PieChartOutlined />, []),
-    getItem("Asignacion de tramite", "/admin/profiles", <ProfileOutlined />),
+    getItem("Clientes", routesList.clients.path, <PieChartOutlined />, []),
+    getItem(
+      "Formularios",
+      routesList.clients.path,
+      <ProfileOutlined />
+    ),
   ]),
   getItem("Seguridad", "2", null, [
-    getItem("Accesos", "/admin/users", <PieChartOutlined />, []),
-    getItem("Perfiles", "/admin/profiles", <ProfileOutlined />),
+    getItem("Accesos", routesList.users.path, <PieChartOutlined />, []),
+    getItem("Perfiles", routesList.profiles.path, <ProfileOutlined />),
   ]),
   // Uncomment and modify as needed
   // getItem("Almacen", "20", "/admin/almacen", <DesktopOutlined />, [

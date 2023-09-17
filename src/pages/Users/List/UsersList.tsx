@@ -8,6 +8,7 @@ import { UsersListBreadcrumb } from "../Common/Breadcrums";
 import UsersFilters from "./UsersFilters";
 import { usersListColumns } from "./usersTableColumns";
 import { useUsersListPageStore } from "./users_list_page.store";
+import { routesList } from "../../../router/routes";
 
 const { Content } = Layout;
 
@@ -31,7 +32,7 @@ export const UsersList: React.FC = () => {
   };
 
   const doEdit = async (id: string | number) => {
-    navigate(`/admin/users/manage/${id}`);
+    navigate(`${routesList.users.path}/${id}`);
   };
 
   return (

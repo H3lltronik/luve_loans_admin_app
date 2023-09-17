@@ -20,6 +20,7 @@ interface HeaderProps {
 export const DefaultLayout: React.FC<HeaderProps> = (props) => {
   const [collapsed, setCollapsed] = useState(false);
   const { navContent, headerTitle } = props;
+  
 
   return (
     <Layout style={{ minHeight: "100vh" }}>

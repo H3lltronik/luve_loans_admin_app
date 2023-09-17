@@ -1,51 +1,52 @@
 import { Button, Layout } from "antd";
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { ProfileAPI } from "../../../api";
+import { ClientAPI } from "../../../api";
 import { AdminDataTable } from "../../../components/Common/AdminDataTable";
 import { AppLoader } from "../../../components/Common/AppLoader";
-import { ProfileListBreadcrumb } from "../Common/Breadcrums";
-import ProfilesFilters from "./ClientsFilters";
-import { profileListColumns } from "./clientsTableColumn";
+import { ClientListBreadcrumb } from "../Common/Breadcrums";
+import ClientsFilters from "./ClientsFilters";
+import { clientListColumns } from "./clientsTableColumn";
+import { routesList } from "../../../router/routes";
 
 const { Content } = Layout;
 
-export const ProfilesList: React.FC = () => {
+export const ClientsList: React.FC = () => {
   const navigate = useNavigate();
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [pageLoading, setPageLoading] = React.useState<boolean>(false);
 
-  const fetchData = (params: object) => ProfileAPI.getProfiles(params);
+  const fetchData = (params: object) => ClientAPI.getClients(params);
 
   const doDelete = async (id: string | number) => {
-    return ProfileAPI.deleteProfile(id as string);
+    return ClientAPI.deleteClient(id as string);
   };
 
   const doEdit = async (id: string | number) => {
-    navigate(`/admin/profiles/manage/${id}`);
+    navigate(`${routesList.clientsManage.path}/${id}`);
   };
 
   return (
     <>
       <Content style={{ margin: "0 16px" }}>
         <div className="flex justify-between items-center">
-          <ProfileListBreadcrumb />
+          <ClientListBreadcrumb />
 
           <Button
-            onClick={() => navigate("/admin/profiles/manage")}
+            onClick={() => navigate(routesList.clientsManage.path)}
             className="bg-red-600 text-white hover:bg-green-50"
             type="default">
-            Nuevo perfil
+            Nuevo cliente
           </Button>
         </div>
         <div className="p-[24px] bg-white">
-          <ProfilesFilters />
+          <ClientsFilters />
 
           <section className="mx-auto">
             <AdminDataTable
-              queryKey="profiles"
+              queryKey="clients"
               fetchData={fetchData}
-              columns={profileListColumns}
+              columns={clientListColumns}
               deleteAction={doDelete}
               editAction={doEdit}
             />

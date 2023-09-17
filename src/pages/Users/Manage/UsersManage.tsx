@@ -10,6 +10,7 @@ import UserForm, {
 } from "../../../components/Forms/User/UserForm";
 import { showToast } from "../../../lib/notify";
 import { UsersManageBreadcrumb } from "../Common/Breadcrums";
+import { routesList } from "../../../router/routes";
 
 const { confirm } = Modal;
 const { Content } = Layout;
@@ -66,7 +67,7 @@ export const UsersManage: React.FC = () => {
       if (result) {
         if ("id" in result) {
           showToast(message, "success");
-          navigate("/admin/users");
+          navigate(routesList.users.path);
         }
       }
     } catch (error) {
@@ -85,7 +86,7 @@ export const UsersManage: React.FC = () => {
           recuperar.
         </p>
       ),
-      onOk: () => navigate("/admin/users"),
+      onOk: () => navigate(routesList.users.path),
       okButtonProps: {
         className: "bg-red-500 border-none hover:bg-red-600",
       },

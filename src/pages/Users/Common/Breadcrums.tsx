@@ -1,6 +1,7 @@
 import { Breadcrumb } from "antd";
 import { ItemType } from "antd/es/breadcrumb/Breadcrumb";
 import { useNavigate } from "react-router-dom";
+import { routesList } from "../../../router/routes";
 
 export const UsersManageBreadcrumb = () => {
   const navigate = useNavigate();
@@ -14,9 +15,9 @@ export const UsersManageBreadcrumb = () => {
       className:
         "cursor-pointer hover:text-blue-500 transition-all duration-300",
       onClick: () => {
-        navigate("/admin/users");
+        navigate(routesList.users.path);
       },
-      href: "/admin/users",
+      href: routesList.users.path,
     },
     {
       title: "Crear - Editar usuario",

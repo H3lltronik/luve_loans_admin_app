@@ -1,6 +1,7 @@
 import { Breadcrumb } from "antd";
 import { ItemType } from "antd/es/breadcrumb/Breadcrumb";
 import { useNavigate } from "react-router-dom";
+import { routesList } from "../../../router/routes";
 
 export const ProfileManageBreadcrumb = () => {
   const navigate = useNavigate();
@@ -14,9 +15,9 @@ export const ProfileManageBreadcrumb = () => {
       className:
         "cursor-pointer hover:text-blue-500 transition-all duration-300",
       onClick: () => {
-        navigate("/admin/profiles");
+        navigate(routesList.profiles.path);
       },
-      href: "/admin/profiles",
+      href: routesList.profiles.path,
     },
     {
       title: "Crear - Editar perfil",

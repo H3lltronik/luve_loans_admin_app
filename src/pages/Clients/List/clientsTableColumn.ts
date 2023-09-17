@@ -1,7 +1,7 @@
 import type { ColumnsType } from "antd/es/table";
 import { alphabetically } from "../../../lib/sorters";
 
-export const profileListColumns: ColumnsType<Profile> = [
+export const clientListColumns: ColumnsType<Client> = [
   {
     title: "ID",
     dataIndex: "seqId",
@@ -18,13 +18,27 @@ export const profileListColumns: ColumnsType<Profile> = [
     showSorterTooltip: false,
   },
   {
-    title: "Roles",
-    dataIndex: "roles",
-    key: "roles",
+    title: "Apellidos",
+    dataIndex: "lastName",
+    key: "lastName",
+    sorter: (a, b) =>
+      a.lastName && b.lastName ? alphabetically(a.lastName, b.lastName) : 0,
+    showSorterTooltip: false,
   },
   {
-    title: "Estatus",
-    dataIndex: "status",
-    key: "status",
+    title: "Correo",
+    dataIndex: "email",
+    key: "email",
+    sorter: (a, b) =>
+      a.email && b.email ? alphabetically(a.email, b.email) : 0,
+    showSorterTooltip: false,
+  },
+  {
+    title: "Direccion",
+    dataIndex: "address",
+    key: "address",
+    sorter: (a, b) =>
+      a.address && b.address ? alphabetically(a.address, b.address) : 0,
+    showSorterTooltip: false,
   },
 ];

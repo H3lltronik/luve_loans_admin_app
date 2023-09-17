@@ -3,8 +3,9 @@ import type { MenuProps } from "antd";
 import { Menu } from "antd";
 import React, { useEffect, useState } from "react"; // Import useEffect
 import { useLocation, useNavigate } from "react-router-dom";
+import { routesList } from "../../../router/routes";
 
-export const ProfilesHeader: React.FC = () => {
+export const ClientsHeader: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -17,19 +18,19 @@ export const ProfilesHeader: React.FC = () => {
 
   const items: MenuProps["items"] = [
     {
-      label: "Listado de perfiles",
-      key: "/admin/profiles",
+      label: "Listado de clientees",
+      key: routesList.clients.path,
       icon: <OrderedListOutlined />,
       onClick: () => {
-        navigate("/admin/profiles");
+        navigate(routesList.clients.path);
       },
     },
     {
-      label: "Crear perfil",
-      key: "/admin/profiles/manage",
+      label: "Crear cliente",
+      key: routesList.clientsManage.path,
       icon: <EditOutlined />,
       onClick: () => {
-        navigate("/admin/profiles/manage");
+        navigate(routesList.clientsManage.path);
       },
     },
   ];

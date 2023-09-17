@@ -9,6 +9,7 @@ import ProfilesForm, {
   ProfilesFormHandle,
 } from "../../../components/Forms/Profiles/ProfilesForm";
 import { showToast } from "../../../lib/notify";
+import { routesList } from "../../../router/routes";
 import { ProfileManageBreadcrumb } from "../Common/Breadcrums";
 
 const { confirm } = Modal;
@@ -59,7 +60,7 @@ export const ProfilesManage: React.FC = () => {
       if (result) {
         if ("id" in result) {
           showToast(message, "success");
-          navigate("/admin/profiles");
+          navigate(routesList.profiles.path);
         }
       }
     } catch (error) {
@@ -78,7 +79,7 @@ export const ProfilesManage: React.FC = () => {
           recuperar.
         </p>
       ),
-      onOk: () => navigate("/admin/profiles"),
+      onOk: () => navigate(routesList.profiles.path),
       okButtonProps: {
         className: "bg-red-500 border-none hover:bg-red-600",
       },

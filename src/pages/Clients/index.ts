@@ -1,2 +1,2 @@
-export { ProfilesList } from "./List/ClientsList";
-export { ProfilesManage } from "./Manage/ClientsManage";
+export { ClientsList } from "./List/ClientsList";
+export { ClientsManage } from "./Manage/ClientsManage";

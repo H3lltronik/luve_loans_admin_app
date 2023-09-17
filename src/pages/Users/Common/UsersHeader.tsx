@@ -3,6 +3,7 @@ import type { MenuProps } from "antd";
 import { Menu } from "antd";
 import React, { useEffect, useState } from "react"; // Import useEffect
 import { useLocation, useNavigate } from "react-router-dom";
+import { routesList } from "../../../router/routes";
 
 export const UsersHeader: React.FC = () => {
   const navigate = useNavigate();
@@ -18,18 +19,18 @@ export const UsersHeader: React.FC = () => {
   const items: MenuProps["items"] = [
     {
       label: "Listado de usuarios",
-      key: "/admin/users",
+      key: routesList.users.path,
       icon: <OrderedListOutlined />,
       onClick: () => {
-        navigate("/admin/users");
+        navigate(routesList.users.path);
       },
     },
     {
       label: "Crear usuario",
-      key: "/admin/users/manage",
+      key: routesList.usersManage.path,
       icon: <EditOutlined />,
       onClick: () => {
-        navigate("/admin/users/manage");
+        navigate(routesList.usersManage.path);
       },
     },
   ];

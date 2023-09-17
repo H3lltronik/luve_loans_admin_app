@@ -7,6 +7,7 @@ import { AppLoader } from "../../../components/Common/AppLoader";
 import { ProfileListBreadcrumb } from "../Common/Breadcrums";
 import ProfilesFilters from "./ProfilesFilters";
 import { profileListColumns } from "./profilesTableColumn";
+import { routesList } from "../../../router/routes";
 
 const { Content } = Layout;
 
@@ -22,7 +23,7 @@ export const ProfilesList: React.FC = () => {
   };
 
   const doEdit = async (id: string | number) => {
-    navigate(`/admin/profiles/manage/${id}`);
+    navigate(`${routesList.profilesManage.path}/${id}`);
   };
 
   return (
@@ -32,7 +33,7 @@ export const ProfilesList: React.FC = () => {
           <ProfileListBreadcrumb />
 
           <Button
-            onClick={() => navigate("/admin/profiles/manage")}
+            onClick={() => navigate(routesList.profilesManage.path)}
             className="bg-red-600 text-white hover:bg-green-50"
             type="default">
             Nuevo perfil

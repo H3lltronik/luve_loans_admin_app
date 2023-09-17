@@ -3,37 +3,38 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import { Layout, Modal } from "antd";
 import React, { useMemo, useRef } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { ProfileAPI } from "../../../api";
+import { ClientAPI } from "../../../api";
 import { AppLoader } from "../../../components/Common/AppLoader";
-import ProfilesForm, {
-  ProfilesFormHandle,
-} from "../../../components/Forms/Profiles/ProfilesForm";
+import ClientsForm, {
+  ClientFormHandle,
+} from "../../../components/Forms/Clients/ClientsForm";
 import { showToast } from "../../../lib/notify";
-import { ProfileManageBreadcrumb } from "../Common/Breadcrums";
+import { ClientManageBreadcrumb } from "../Common/Breadcrums";
+import { routesList } from "../../../router/routes";
 
 const { confirm } = Modal;
 const { Content } = Layout;
 
-export const ProfilesManage: React.FC = () => {
-  const profileFormRef = useRef<ProfilesFormHandle | null>(null);
+export const ClientsManage: React.FC = () => {
+  const clientFormRef = useRef<ClientFormHandle | null>(null);
   const [pageLoading, setPageLoading] = React.useState<boolean>(false);
-  const { mutateAsync } = useMutation((data: CreateProfileRequest) =>
-    ProfileAPI.createProfile(data)
+  const { mutateAsync } = useMutation((data: CreateClientRequest) =>
+    ClientAPI.createClient(data)
   );
 
   const navigate = useNavigate();
   const { id } = useParams();
 
-  const entity = useQuery<GetProfileResponse | APIError>(
-    ["profiles", { id }],
-    () => ProfileAPI.getProfile(id as string),
+  const entity = useQuery<GetClientResponse | APIError>(
+    ["clients", { id }],
+    () => ClientAPI.getClient(id as string),
     { enabled: !!id }
   );
 
   const submitForm = async (isDraft = false) => {
-    const profileFormData = (await profileFormRef.current?.getFormData({
+    const clientFormData = (await clientFormRef.current?.getFormData({
       draftMode: isDraft,
-    })) as CreateProfileRequest;
+    })) as CreateClientRequest;
 
     setPageLoading(true);
     try {
@@ -42,24 +43,21 @@ export const ProfilesManage: React.FC = () => {
 
       if (entity?.data) {
         if ("id" in entity.data) {
-          result = await ProfileAPI.updateProfile(
-            entity.data.id,
-            profileFormData
-          );
-          message = "Perfil actualizado correctamente";
+          result = await ClientAPI.updateClient(entity.data.id, clientFormData);
+          message = "Cliente actualizado correctamente";
         } else {
-          alert("No se puede actualizar el perfil");
+          alert("No se puede actualizar el cliente");
           console.error("Not valid entity", entity.data);
         }
       } else {
-        result = await mutateAsync(profileFormData);
-        message = "Perfil creado correctamente";
+        result = await mutateAsync(clientFormData);
+        message = "Cliente creado correctamente";
       }
 
       if (result) {
         if ("id" in result) {
           showToast(message, "success");
-          navigate("/admin/profiles");
+          navigate(routesList.clients.path);
         }
       }
     } catch (error) {
@@ -78,7 +76,7 @@ export const ProfilesManage: React.FC = () => {
           recuperar.
         </p>
       ),
-      onOk: () => navigate("/admin/profiles"),
+      onOk: () => navigate(routesList.clients.path),
       okButtonProps: {
         className: "bg-red-500 border-none hover:bg-red-600",
       },
@@ -95,10 +93,10 @@ export const ProfilesManage: React.FC = () => {
   return (
     <>
       <Content style={{ margin: "0 16px" }}>
-        <ProfileManageBreadcrumb />
+        <ClientManageBreadcrumb />
         <div className="p-[24px] bg-white">
           <section className="max-w-[1500px]">
-            <ProfilesForm ref={profileFormRef} entity={entityData} />
+            <ClientsForm ref={clientFormRef} entity={entityData} />
 
             <button
               type="button"

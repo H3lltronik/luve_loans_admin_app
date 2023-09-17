@@ -1,7 +1,7 @@
-// import { useProfilesListPageStore } from "./profiles_list_page.store";
+// import { useClientsListPageStore } from "./clients_list_page.store";
 
-export default function ProfilesFilters() {
-  //   const {} = useProfilesListPageStore((state) => state);
+export default function ClientsFilters() {
+  //   const {} = useClientsListPageStore((state) => state);
 
   return (
     <section className="flex items-center pb-2 gap-3">
