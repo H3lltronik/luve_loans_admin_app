@@ -31,13 +31,12 @@ function getItem(
 const items: MenuItem[] = [
   getItem("Tramites", "1", null, [
     getItem("Clientes", routesList.clients.path, <PieChartOutlined />, []),
-    getItem(
-      "Formularios",
-      routesList.clients.path,
-      <ProfileOutlined />
-    ),
   ]),
-  getItem("Seguridad", "2", null, [
+  getItem("Formularios", "2", null, [
+    getItem("Formularios", routesList.loanForms.path, <ProfileOutlined />),
+    getItem("Campos", routesList.loanFields.path, <ProfileOutlined />),
+  ]),
+  getItem("Seguridad", "3", null, [
     getItem("Accesos", routesList.users.path, <PieChartOutlined />, []),
     getItem("Perfiles", routesList.profiles.path, <ProfileOutlined />),
   ]),

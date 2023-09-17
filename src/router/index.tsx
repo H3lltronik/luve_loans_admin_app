@@ -5,6 +5,10 @@ import { ClientsHeader } from "../pages/Clients/Common/ClientsHeader";
 import NotFound from "../pages/Errors/NotFound";
 import { Home } from "../pages/Home";
 import { HomeHeader } from "../pages/Home/HomeHeader";
+import { LoanFieldsList, LoanFieldsManage } from "../pages/LoanFields";
+import { LoanFieldsHeader } from "../pages/LoanFields/Common/LoanFieldsHeader";
+import { LoanFormsList, LoanFormsManage } from "../pages/LoanForms";
+import { LoanFormsHeader } from "../pages/LoanForms/Common/LoanFormsHeader";
 import Login from "../pages/Login/Login";
 import { ProfilesList, ProfilesManage } from "../pages/Profiles";
 import { ProfilesHeader } from "../pages/Profiles/Common/ProfilesHeader";
@@ -29,6 +33,42 @@ const router = createBrowserRouter([
           </DefaultLayout>
         }
       />
+    ),
+  },
+  {
+    path: routesList.loanForms.path,
+    element: (
+      <DefaultLayout navContent={<LoanFormsHeader />} headerTitle="Formularios">
+        <LoanFormsList />
+      </DefaultLayout>
+    ),
+  },
+  {
+    path: `${routesList.loanFormsManage.path}/:id?`,
+    element: (
+      <DefaultLayout navContent={<LoanFormsHeader />} headerTitle="Formularios">
+        <LoanFormsManage />
+      </DefaultLayout>
+    ),
+  },
+  {
+    path: routesList.loanFields.path,
+    element: (
+      <DefaultLayout
+        navContent={<LoanFieldsHeader />}
+        headerTitle="Campos de formularios">
+        <LoanFieldsList />
+      </DefaultLayout>
+    ),
+  },
+  {
+    path: `${routesList.loanFieldsManage.path}/:id?`,
+    element: (
+      <DefaultLayout
+        navContent={<LoanFieldsHeader />}
+        headerTitle="Campos de formularios">
+        <LoanFieldsManage />
+      </DefaultLayout>
     ),
   },
   {
