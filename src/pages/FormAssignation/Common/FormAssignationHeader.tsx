@@ -5,7 +5,7 @@ import React, { useEffect, useState } from "react"; // Import useEffect
 import { useLocation, useNavigate } from "react-router-dom";
 import { routesList } from "../../../router/routes";
 
-export const LoanFieldsHeader: React.FC = () => {
+export const FormAssignationsHeader: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -18,19 +18,19 @@ export const LoanFieldsHeader: React.FC = () => {
 
   const items: MenuProps["items"] = [
     {
-      label: "Listado de loanFieldees",
-      key: routesList.loanFields.path,
+      label: "Listado de formAssignationees",
+      key: routesList.formAssignations.path,
       icon: <OrderedListOutlined />,
       onClick: () => {
-        navigate(routesList.loanFields.path);
+        navigate(routesList.formAssignations.path);
       },
     },
     {
-      label: "Crear loanFielde",
-      key: routesList.loanFieldsManage.path,
+      label: "Crear formAssignatione",
+      key: routesList.formAssignationsManage.path,
       icon: <EditOutlined />,
       onClick: () => {
-        navigate(routesList.loanFieldsManage.path);
+        navigate(routesList.formAssignationsManage.path);
       },
     },
   ];

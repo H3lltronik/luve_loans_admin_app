@@ -3,6 +3,11 @@ import { DefaultLayout } from "../Layouts/DefaultLayout";
 import { ClientsList, ClientsManage } from "../pages/Clients";
 import { ClientsHeader } from "../pages/Clients/Common/ClientsHeader";
 import NotFound from "../pages/Errors/NotFound";
+import {
+  FormAssignationsList,
+  FormAssignationsManage,
+} from "../pages/FormAssignation";
+import { FormAssignationsHeader } from "../pages/FormAssignation/Common/FormAssignationHeader";
 import { Home } from "../pages/Home";
 import { HomeHeader } from "../pages/Home/HomeHeader";
 import { LoanFieldsList, LoanFieldsManage } from "../pages/LoanFields";
@@ -48,6 +53,26 @@ const router = createBrowserRouter([
     element: (
       <DefaultLayout navContent={<LoanFormsHeader />} headerTitle="Formularios">
         <LoanFormsManage />
+      </DefaultLayout>
+    ),
+  },
+  {
+    path: routesList.formAssignations.path,
+    element: (
+      <DefaultLayout
+        navContent={<FormAssignationsHeader />}
+        headerTitle="Asignacion de formulario">
+        <FormAssignationsList />
+      </DefaultLayout>
+    ),
+  },
+  {
+    path: `${routesList.formAssignationsManage.path}/:id?`,
+    element: (
+      <DefaultLayout
+        navContent={<FormAssignationsHeader />}
+        headerTitle="Asignacion de formulario">
+        <FormAssignationsManage />
       </DefaultLayout>
     ),
   },

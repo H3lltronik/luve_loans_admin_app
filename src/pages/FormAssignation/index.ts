@@ -1,2 +1,2 @@
-export { LoanFieldsList } from "./List/FormAssignationList";
-export { LoanFieldsManage } from "./Manage/LoanFieldsManage";
+export { FormAssignationsList } from "./List/FormAssignationList";
+export { FormAssignationsManage } from "./Manage/FormAssignationsManage";

@@ -1,52 +1,53 @@
 import { Button, Layout } from "antd";
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { LoanFieldAPI } from "../../../api";
+import { FormAssignationAPI } from "../../../api";
 import { AdminDataTable } from "../../../components/Common/AdminDataTable";
 import { AppLoader } from "../../../components/Common/AppLoader";
 import { routesList } from "../../../router/routes";
-import { LoanFieldListBreadcrumb } from "../Common/Breadcrums";
-import LoanFieldsFilters from "./FormAssignationFilters";
-import { loanFieldListColumns } from "./formAssignationTableColumn";
+import { FormAssignationListBreadcrumb } from "../Common/Breadcrums";
+import FormAssignationsFilters from "./FormAssignationFilters";
+import { formAssignationListColumns } from "./formAssignationTableColumn";
 
 const { Content } = Layout;
 
-export const LoanFieldsList: React.FC = () => {
+export const FormAssignationsList: React.FC = () => {
   const navigate = useNavigate();
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [pageLoading, setPageLoading] = React.useState<boolean>(false);
 
-  const fetchData = (params: object) => LoanFieldAPI.getLoanFields(params);
+  const fetchData = (params: object) =>
+    FormAssignationAPI.getFormAssignations(params);
 
   const doDelete = async (id: string | number) => {
-    return LoanFieldAPI.deleteLoanField(id as string);
+    return FormAssignationAPI.deleteFormAssignation(id as string);
   };
 
   const doEdit = async (id: string | number) => {
-    navigate(`${routesList.loanFieldsManage.path}/${id}`);
+    navigate(`${routesList.formAssignationsManage.path}/${id}`);
   };
 
   return (
     <>
       <Content style={{ margin: "0 16px" }}>
         <div className="flex justify-between items-center">
-          <LoanFieldListBreadcrumb />
+          <FormAssignationListBreadcrumb />
 
           <Button
-            onClick={() => navigate(routesList.loanFieldsManage.path)}
+            onClick={() => navigate(routesList.formAssignationsManage.path)}
             className="bg-red-600 text-white hover:bg-green-50"
             type="default">
-            Nuevo Campo
+            Nuevo Proceso
           </Button>
         </div>
         <div className="p-[24px] bg-white">
-          <LoanFieldsFilters />
+          <FormAssignationsFilters />
 
           <section className="mx-auto">
             <AdminDataTable
-              queryKey="loanFields"
+              queryKey="formAssignations"
               fetchData={fetchData}
-              columns={loanFieldListColumns}
+              columns={formAssignationListColumns}
               deleteAction={doDelete}
               editAction={doEdit}
             />

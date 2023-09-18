@@ -33,7 +33,7 @@ const items: MenuItem[] = [
     getItem("Clientes", routesList.clients.path, <PieChartOutlined />, []),
     getItem(
       "Asignacion de tramite",
-      routesList.clients.path,
+      routesList.formAssignations.path,
       <PieChartOutlined />,
       []
     ),

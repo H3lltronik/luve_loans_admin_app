@@ -1,7 +1,7 @@
-// import { useLoanFieldsListPageStore } from "./loanFields_list_page.store";
+// import { useFormAssignationsListPageStore } from "./formAssignations_list_page.store";
 
-export default function LoanFieldsFilters() {
-  //   const {} = useLoanFieldsListPageStore((state) => state);
+export default function FormAssignationsFilters() {
+  //   const {} = useFormAssignationsListPageStore((state) => state);
 
   return (
     <section className="flex items-center pb-2 gap-3">

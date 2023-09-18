@@ -3,38 +3,39 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import { Layout, Modal } from "antd";
 import React, { useMemo, useRef } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { LoanFieldAPI } from "../../../api";
+import { FormAssignationAPI } from "../../../api";
 import { AppLoader } from "../../../components/Common/AppLoader";
-import LoanFieldsForm, {
-  LoanFieldFormHandle,
-} from "../../../components/Forms/LoanFields/LoanFieldsForm";
+import FormAssignationsForm, {
+  FormAssignationFormHandle,
+} from "../../../components/Forms/FormAssignations/FormAssignationsForm";
 import { showToast } from "../../../lib/notify";
 import { routesList } from "../../../router/routes";
-import { LoanFieldManageBreadcrumb } from "../Common/Breadcrums";
+import { FormAssignationManageBreadcrumb } from "../Common/Breadcrums";
 
 const { confirm } = Modal;
 const { Content } = Layout;
 
-export const LoanFieldsManage: React.FC = () => {
-  const loanFieldFormRef = useRef<LoanFieldFormHandle | null>(null);
+export const FormAssignationsManage: React.FC = () => {
+  const formAssignationFormRef = useRef<FormAssignationFormHandle | null>(null);
   const [pageLoading, setPageLoading] = React.useState<boolean>(false);
-  const { mutateAsync } = useMutation((data: CreateLoanFieldRequest) =>
-    LoanFieldAPI.createLoanField(data)
+  const { mutateAsync } = useMutation((data: CreateFormAssignationRequest) =>
+    FormAssignationAPI.createFormAssignation(data)
   );
 
   const navigate = useNavigate();
   const { id } = useParams();
 
-  const entity = useQuery<GetLoanFieldResponse | APIError>(
-    ["loanFields", { id }],
-    () => LoanFieldAPI.getLoanField(id as string),
+  const entity = useQuery<GetFormAssignationResponse | APIError>(
+    ["formAssignations", { id }],
+    () => FormAssignationAPI.getFormAssignation(id as string),
     { enabled: !!id }
   );
 
   const submitForm = async (isDraft = false) => {
-    const loanFieldFormData = (await loanFieldFormRef.current?.getFormData({
-      draftMode: isDraft,
-    })) as CreateLoanFieldRequest;
+    const formAssignationFormData =
+      (await formAssignationFormRef.current?.getFormData({
+        draftMode: isDraft,
+      })) as CreateFormAssignationRequest;
 
     setPageLoading(true);
     try {
@@ -43,24 +44,24 @@ export const LoanFieldsManage: React.FC = () => {
 
       if (entity?.data) {
         if ("id" in entity.data) {
-          result = await LoanFieldAPI.updateLoanField(
+          result = await FormAssignationAPI.updateFormAssignation(
             entity.data.id,
-            loanFieldFormData
+            formAssignationFormData
           );
-          message = "LoanFielde actualizado correctamente";
+          message = "FormAssignatione actualizado correctamente";
         } else {
-          alert("No se puede actualizar el loanFielde");
+          alert("No se puede actualizar el formAssignatione");
           console.error("Not valid entity", entity.data);
         }
       } else {
-        result = await mutateAsync(loanFieldFormData);
-        message = "LoanFielde creado correctamente";
+        result = await mutateAsync(formAssignationFormData);
+        message = "FormAssignatione creado correctamente";
       }
 
       if (result) {
         if ("id" in result) {
           showToast(message, "success");
-          navigate(routesList.loanFields.path);
+          navigate(routesList.formAssignations.path);
         }
       }
     } catch (error) {
@@ -79,7 +80,7 @@ export const LoanFieldsManage: React.FC = () => {
           recuperar.
         </p>
       ),
-      onOk: () => navigate(routesList.loanFields.path),
+      onOk: () => navigate(routesList.formAssignations.path),
       okButtonProps: {
         className: "bg-red-500 border-none hover:bg-red-600",
       },
@@ -96,10 +97,13 @@ export const LoanFieldsManage: React.FC = () => {
   return (
     <>
       <Content style={{ margin: "0 16px" }}>
-        <LoanFieldManageBreadcrumb />
+        <FormAssignationManageBreadcrumb />
         <div className="p-[24px] bg-white">
           <section className="max-w-[1500px]">
-            <LoanFieldsForm ref={loanFieldFormRef} entity={entityData} />
+            <FormAssignationsForm
+              ref={formAssignationFormRef}
+              entity={entityData}
+            />
 
             <button
               type="button"

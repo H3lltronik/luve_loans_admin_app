@@ -15,6 +15,14 @@ export const routesList = {
     path: "/admin/loan_forms/manage",
     name: "loan_forms",
   },
+  formAssignations: {
+    path: "/admin/form_assignations",
+    name: "form_assignations",
+  },
+  formAssignationsManage: {
+    path: "/admin/form_assignations/manage",
+    name: "form_assignations",
+  },
   loanFields: {
     path: "/admin/loan_fields",
     name: "loan_fields",

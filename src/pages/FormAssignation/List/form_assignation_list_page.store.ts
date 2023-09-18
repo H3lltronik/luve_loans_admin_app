@@ -1,13 +1,12 @@
 import { create } from "zustand";
 
-type LoanFieldsListPageState = {
+type FormAssignationsListPageState = {
   loading: boolean;
   setLoading: (value: boolean) => void;
 };
 
-export const useLoanFieldsListPageStore = create<LoanFieldsListPageState>(
-  (set, get) => ({
+export const useFormAssignationsListPageStore =
+  create<FormAssignationsListPageState>((set, get) => ({
     loading: false,
     setLoading: (value: boolean) => set({ loading: value }),
-  })
-);
+  }));
