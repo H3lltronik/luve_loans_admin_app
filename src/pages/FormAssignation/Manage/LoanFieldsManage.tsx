@@ -3,41 +3,38 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import { Layout, Modal } from "antd";
 import React, { useMemo, useRef } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { LoanFormAPI, LoanFormFieldAPI } from "../../../api";
+import { LoanFieldAPI } from "../../../api";
 import { AppLoader } from "../../../components/Common/AppLoader";
-import LoanFormsForm, {
-  LoanFormFormHandle,
-} from "../../../components/Forms/LoanForms/LoanFormsForm";
+import LoanFieldsForm, {
+  LoanFieldFormHandle,
+} from "../../../components/Forms/LoanFields/LoanFieldsForm";
 import { showToast } from "../../../lib/notify";
 import { routesList } from "../../../router/routes";
-import { LoanFormManageBreadcrumb } from "../Common/Breadcrums";
-import { parseFormData } from "./utils";
+import { LoanFieldManageBreadcrumb } from "../Common/Breadcrums";
 
 const { confirm } = Modal;
 const { Content } = Layout;
 
-export const LoanFormsManage: React.FC = () => {
-  const loanFormFormRef = useRef<LoanFormFormHandle | null>(null);
+export const LoanFieldsManage: React.FC = () => {
+  const loanFieldFormRef = useRef<LoanFieldFormHandle | null>(null);
   const [pageLoading, setPageLoading] = React.useState<boolean>(false);
-  const { mutateAsync: mutateForm } = useMutation(
-    (data: CreateLoanFormRequest) => LoanFormAPI.createLoanForm(data)
+  const { mutateAsync } = useMutation((data: CreateLoanFieldRequest) =>
+    LoanFieldAPI.createLoanField(data)
   );
 
   const navigate = useNavigate();
   const { id } = useParams();
 
-  const entity = useQuery<GetLoanFormResponse | APIError>(
-    ["loanForms", { id }],
-    () => LoanFormAPI.getLoanForm(id as string),
+  const entity = useQuery<GetLoanFieldResponse | APIError>(
+    ["loanFields", { id }],
+    () => LoanFieldAPI.getLoanField(id as string),
     { enabled: !!id }
   );
 
   const submitForm = async (isDraft = false) => {
-    const _loanFormFormData = (await loanFormFormRef.current?.getFormData({
+    const loanFieldFormData = (await loanFieldFormRef.current?.getFormData({
       draftMode: isDraft,
-    })) as LoanFormWithFields;
-    const { loanFormFields, ...loanFormFormData } =
-      parseFormData(_loanFormFormData);
+    })) as CreateLoanFieldRequest;
 
     setPageLoading(true);
     try {
@@ -46,38 +43,24 @@ export const LoanFormsManage: React.FC = () => {
 
       if (entity?.data) {
         if ("id" in entity.data) {
-          result = await LoanFormAPI.updateLoanForm(
+          result = await LoanFieldAPI.updateLoanField(
             entity.data.id,
-            loanFormFormData
+            loanFieldFormData
           );
-
-          for (const formField of loanFormFields) {
-            if (formField.id) {
-              await LoanFormFieldAPI.updateLoanFormField(formField.id, {
-                ...formField,
-                loanFormId: entity.data.id,
-              });
-            } else {
-              await LoanFormFieldAPI.createLoanFormField<CreateLoanFormFieldRequest>(
-                { ...formField, loanFormId: entity.data.id }
-              );
-            }
-          }
-
-          message = "LoanForme actualizado correctamente";
+          message = "LoanFielde actualizado correctamente";
         } else {
-          alert("No se puede actualizar el loanForme");
+          alert("No se puede actualizar el loanFielde");
           console.error("Not valid entity", entity.data);
         }
       } else {
-        result = await mutateForm(loanFormFormData);
-        message = "LoanForme creado correctamente";
+        result = await mutateAsync(loanFieldFormData);
+        message = "LoanFielde creado correctamente";
       }
 
       if (result) {
         if ("id" in result) {
           showToast(message, "success");
-          navigate(routesList.loanForms.path);
+          navigate(routesList.loanFields.path);
         }
       }
     } catch (error) {
@@ -96,7 +79,7 @@ export const LoanFormsManage: React.FC = () => {
           recuperar.
         </p>
       ),
-      onOk: () => navigate(routesList.loanForms.path),
+      onOk: () => navigate(routesList.loanFields.path),
       okButtonProps: {
         className: "bg-red-500 border-none hover:bg-red-600",
       },
@@ -113,10 +96,10 @@ export const LoanFormsManage: React.FC = () => {
   return (
     <>
       <Content style={{ margin: "0 16px" }}>
-        <LoanFormManageBreadcrumb />
+        <LoanFieldManageBreadcrumb />
         <div className="p-[24px] bg-white">
           <section className="max-w-[1500px]">
-            <LoanFormsForm ref={loanFormFormRef} entity={entityData} />
+            <LoanFieldsForm ref={loanFieldFormRef} entity={entityData} />
 
             <button
               type="button"

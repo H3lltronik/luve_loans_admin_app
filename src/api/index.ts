@@ -2,6 +2,7 @@ import BaseAuthAPI from "./auth/auth.api";
 import BaseClientAPI from "./client/client.api";
 import { ENTITIES_ENDPOINTS } from "./constants";
 import * as END_POINTS from "./endpoints";
+import BaseLoanFormFieldAPI from "./loanFieldForm/loan_field_forms.api";
 import BaseLoanFieldAPI from "./loanFields/loan_fields.api";
 import BaseLoanFormAPI from "./loanForms/loan_forms.api";
 import BaseProfilesAPI from "./profiles/profiles.api";
@@ -23,6 +24,9 @@ export const LoanFormAPI = new BaseLoanFormAPI(
 );
 export const LoanFieldAPI = new BaseLoanFieldAPI(
   `${BASE_URL}/${ENTITIES_ENDPOINTS.loanFields}`
+);
+export const LoanFormFieldAPI = new BaseLoanFormFieldAPI(
+  `${BASE_URL}/${ENTITIES_ENDPOINTS.loanFormFields}`
 );
 
 export const AuthAPI = new BaseAuthAPI({

@@ -51,7 +51,12 @@ export const GenericSelect = <T,>({
   return (
     <Form.Item label={label} name={name} rules={rules}>
       <AntSelect
+        showSearch
         placeholder={`${placeholder}`}
+        optionFilterProp="children"
+        filterOption={(input, option) =>
+          option?.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+        }
         allowClear
         loading={isLoading}
         {...restProps}>

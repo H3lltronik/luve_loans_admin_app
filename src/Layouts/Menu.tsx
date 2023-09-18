@@ -31,6 +31,12 @@ function getItem(
 const items: MenuItem[] = [
   getItem("Tramites", "1", null, [
     getItem("Clientes", routesList.clients.path, <PieChartOutlined />, []),
+    getItem(
+      "Asignacion de tramite",
+      routesList.clients.path,
+      <PieChartOutlined />,
+      []
+    ),
   ]),
   getItem("Formularios", "2", null, [
     getItem("Formularios", routesList.loanForms.path, <ProfileOutlined />),

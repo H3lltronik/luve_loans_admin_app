@@ -1,7 +1,9 @@
-import { Form, Input } from "antd";
-import TextArea from "antd/es/input/TextArea";
+import { DeleteOutlined, PlusOutlined } from "@ant-design/icons";
+import { Button, Form, Input, Popconfirm, Spin } from "antd";
 import { forwardRef, useEffect, useImperativeHandle, useState } from "react";
-import { UserAPI } from "../../../api";
+import { v4 as uuidv4 } from "uuid";
+import { LoanFieldAPI, LoanFormFieldAPI } from "../../../api";
+import { flattenLoanFormFields } from "../../../pages/LoanForms/Manage/utils";
 import { GenericSelect } from "../Common/GenericSelect";
 
 const onFinish = (values: unknown) => {
@@ -27,13 +29,20 @@ export type LoanFormFormHandle = {
 };
 
 type LoanFormFormProps = {
-  entity?: LoanForm | null;
+  entity?: LoanFormWithFields | null;
+};
+
+type FieldFormItem = {
+  id: string;
+  local: boolean;
 };
 
 const LoanFormForm = forwardRef<LoanFormFormHandle, LoanFormFormProps>(
   (props, ref) => {
     const [form] = Form.useForm();
     const [isDraft, setIsDraft] = useState<boolean>(false);
+    const [fields, setFields] = useState<FieldFormItem[]>([]);
+    const [loading, setLoading] = useState<boolean>(false);
 
     useImperativeHandle(
       ref,
@@ -52,8 +61,32 @@ const LoanFormForm = forwardRef<LoanFormFormHandle, LoanFormFormProps>(
       })
     );
 
+    const addFieldCount = (id = uuidv4(), local = true) => {
+      console.log("addFieldCount", id, local, fields);
+      setFields([...fields, { id, local }]);
+    };
+
+    const removeFieldCount = async (id: string) => {
+      const found = fields.find((field) => field.id === id);
+
+      if (!found?.local) {
+        setLoading(true);
+        await LoanFormFieldAPI.deleteLoanFormField(id);
+        setLoading(false);
+      }
+
+      const newFields = fields.filter((field) => field.id !== id);
+      setFields(newFields);
+    };
+
     useEffect(() => {
-      if (props.entity) form.setFieldsValue(props.entity);
+      if (!props.entity) return;
+      const flattened = flattenLoanFormFields(props.entity);
+
+      for (const field of props.entity.loanFormFields)
+        addFieldCount(field.id, false);
+
+      if (props.entity) form.setFieldsValue(flattened);
     }, [form, props.entity]);
 
     return (
@@ -62,16 +95,19 @@ const LoanFormForm = forwardRef<LoanFormFormHandle, LoanFormFormProps>(
         name="basic"
         onFinish={onFinish}
         onFinishFailed={onFinishFailed}
-        autoComplete="off">
+        autoComplete="off"
+        className="relative">
+        {loading && (
+          <div className="absolute top-0 left-0 w-full h-full bg-white opacity-50 z-50 flex items-center justify-center">
+            <div className="flex items-center justify-center">
+              <Spin />
+            </div>
+          </div>
+        )}
+
         <Form.Item<FieldType> label="Id" name="id" hidden={true}>
           <Input />
         </Form.Item>
-        {/* "lastName": "Last test",
-      "phone": "3317354536",
-      "notes": "Notes",
-      "email": "email@gmail.com",
-      "address": "Address",
-      "accessId": "56be1537-5c5e-4d48-bf29-671629b5b7aa" */}
 
         <Form.Item<FieldType>
           label="Nombre"
@@ -82,58 +118,77 @@ const LoanFormForm = forwardRef<LoanFormFormHandle, LoanFormFormProps>(
           <Input type="text" />
         </Form.Item>
 
-        <Form.Item<FieldType>
-          label="Apellido"
-          name="lastName"
-          rules={[
-            { required: true && !isDraft, message: "Este campo es requerido" },
-          ]}>
-          <Input type="text" />
-        </Form.Item>
+        <div className="mb-5">
+          <Button
+            className="bg-red-600 text-white hover:bg-red-100 flex items-center"
+            onClick={() => addFieldCount()}>
+            <span>Añadir campo</span>
+            <PlusOutlined />
+          </Button>
+        </div>
 
-        <Form.Item<FieldType>
-          label="Telefono"
-          name="phone"
-          rules={[
-            { required: true && !isDraft, message: "Este campo es requerido" },
-          ]}>
-          <Input type="phone" />
-        </Form.Item>
+        {fields.map((field, i) => (
+          <>
+            <div className="flex items-start gap-10" key={`field-${field.id}`}>
+              <GenericSelect
+                fetcher={() => LoanFieldAPI.getLoanFields()}
+                label={`Campo #${i + 1}`}
+                placeholder={`Selecciona el campo ${i + 1}`}
+                optionLabel="name"
+                name={`loanFieldId_${field.id}`}
+                optionKey={"id"}
+                rules={[
+                  {
+                    required: true && !isDraft,
+                    message: "Este campo es requerido",
+                  },
+                ]}
+                queryKey={["users"]}
+              />
 
-        <Form.Item<FieldType>
-          label="Email"
-          name="email"
-          rules={[
-            { required: true && !isDraft, message: "Este campo es requerido" },
-          ]}>
-          <Input type="email" />
-        </Form.Item>
+              <Form.Item<FieldType>
+                label="Tamaño de columna"
+                name={`columnWidth_${field.id}`}
+                rules={[
+                  {
+                    required: true && !isDraft,
+                    message: "Este campo es requerido",
+                  },
+                ]}>
+                <Input defaultValue={0} type="number" />
+              </Form.Item>
 
-        <Form.Item<FieldType>
-          label="Dirección"
-          name="address"
-          rules={[
-            { required: true && !isDraft, message: "Este campo es requerido" },
-          ]}>
-          <Input type="text" />
-        </Form.Item>
+              <Form.Item<FieldType>
+                label="Prioridad"
+                name={`priority_${field.id}`}
+                rules={[
+                  {
+                    required: true && !isDraft,
+                    message: "Este campo es requerido",
+                  },
+                ]}>
+                <Input defaultValue={0} type="number" />
+              </Form.Item>
 
-        <GenericSelect
-          fetcher={() => UserAPI.getUsers()}
-          label="Acceso"
-          placeholder="Selecciona un acceso"
-          optionLabel="username"
-          name="accessId"
-          optionKey={"id"}
-          rules={[
-            { required: true && !isDraft, message: "Este campo es requerido" },
-          ]}
-          queryKey={["users"]}
-        />
-
-        <Form.Item<FieldType> label="Notas" name="notes">
-          <TextArea />
-        </Form.Item>
+              <Popconfirm
+                title="Remover el campo"
+                description="¿Estas seguro de remover el campo?"
+                onConfirm={() => removeFieldCount(field.id)}
+                okText="Si"
+                okType="danger"
+                cancelText="No">
+                <Button className="bg-red-600 text-white hover:bg-red-100 flex items-center">
+                  <DeleteOutlined />
+                </Button>
+              </Popconfirm>
+            </div>
+            {i + 1 < fields.length && (
+              <div className="w-full mb-5">
+                <hr />
+              </div>
+            )}
+          </>
+        ))}
       </Form>
     );
   }

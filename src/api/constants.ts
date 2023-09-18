@@ -6,4 +6,5 @@ export const ENTITIES_ENDPOINTS = {
   clients: "clients",
   loanForms: "loanForms",
   loanFields: "loanFields",
+  loanFormFields: "loanFormFields",
 };

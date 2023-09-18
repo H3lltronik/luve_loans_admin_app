@@ -12,11 +12,11 @@ interface LoanForm {
 type MeResponse = LoanForm;
 
 type GetLoanFormsResponse = {
-  data: LoanForm[];
+  data: LoanFormWithFields[];
   pagination: Pagination;
 };
 
-type GetLoanFormResponse = LoanForm;
+type GetLoanFormResponse = LoanFormWithFields;
 type UpdatedLoanFormResponse = LoanForm;
 type DeleteLoanFormResponse = LoanForm;
 
@@ -31,3 +31,9 @@ type GetLoanFormsResponseWithStatus = {
   data: LoanFormsWithStatus;
   pagination: Pagination;
 };
+
+type LoanFormWithFields = LoanForm & {
+  loanFormFields: Omit<LoanFormField, "loanFormId">[];
+};
+
+type FlattenedLoanForm = LoanFormWithFields & Record<string, unknown>;
